@@ -17,7 +17,7 @@ inline constexpr const char* mix       = "mix";
 inline constexpr const char* volume    = "volume";
 inline constexpr const char* bypass    = "bypass";
 // inside the pedal
-inline constexpr const char* floor     = "floor";
+inline constexpr const char* lpgFloor  = "floor";
 inline constexpr const char* input     = "input";
 // bass and extras
 inline constexpr const char* split     = "split";
@@ -113,7 +113,7 @@ inline juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
     });
     add (std::make_unique<AudioParameterBool> (ParameterID { ParamIDs::bypass, 1 }, "Bypass", false));
 
-    flt (ParamIDs::floor, "LPG Floor", 0.0f, 1.0f, 0.48f, [] (float v, int) { return String (roundToInt (ss::floorHz (v))) + " Hz"; });
+    flt (ParamIDs::lpgFloor, "LPG Floor", 0.0f, 1.0f, 0.48f, [] (float v, int) { return String (roundToInt (ss::floorHz (v))) + " Hz"; });
     add (std::make_unique<AudioParameterChoice> (ParameterID { ParamIDs::input, 1 }, "Input", StringArray { "Guitar", "Bass", "Line" }, 0));
     flt (ParamIDs::split, "Bass Split", 60.0f, 200.0f, 110.0f, [] (float v, int) { return String (roundToInt (v)) + " Hz"; });
     flt (ParamIDs::ceiling, "Wobble Ceiling", 10.0f, 80.0f, 30.0f, [] (float v, int) { return String (roundToInt (v)) + " cents"; });

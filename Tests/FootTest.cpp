@@ -232,7 +232,7 @@ int main (int argc, char** argv)
         r.cc (11, 127); r.settle (0.05);
         expect (r.value (ParamIDs::depth) > 0.99f, "toe is full depth");
         r.cc (11, 64); r.settle (0.05);
-        expect (r.value (ParamIDs::depth) > 0.35f && r.value (ParamIDs::depth) < 0.5f, "half travel is still subtle");
+        expect (r.value (ParamIDs::depth) > 0.3f && r.value (ParamIDs::depth) < 0.4f, "half travel is still subtle");
         r.cc (11, 76); r.settle (0.05);
         expect (r.value (ParamIDs::depth) < 0.41f, "60% of the travel stays under 40% Depth");
         expect (std::abs (expressionToDepth (depthToExpression (0.63f)) - 0.63f) < 0.001f, "the curve and its inverse agree");

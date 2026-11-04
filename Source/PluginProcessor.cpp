@@ -81,7 +81,7 @@ ss::EngineParams SeaSickProcessor::readParams()
     p.lpg = f (lpg);
     p.mix = f (mix);
     p.volume = f (volume);
-    p.floor = f (floor);
+    p.floor = f (lpgFloor);
     p.input = idx (input);
     p.splitHz = f (split);
     p.ceilingCents = f (ceiling);
@@ -212,6 +212,7 @@ void SeaSickProcessor::timerCallback() { pump (Time::getMillisecondCounterHiRes(
 
 void SeaSickProcessor::pump (double now)
 {
+    clockNow = now;
     // settings changed by another copy, or another Flip Fella plugin: pick them up
     if (now >= nextSettingsCheck)
     {
@@ -393,7 +394,6 @@ void SeaSickProcessor::onFootEvent (int sw, FootswitchLogic::Event e)
         default: break;
     }
 
-    const double now = Time::getMillisecondCounterHiRes() * 0.001;
     if (sw == 0)   // A: bypass, the pedal's own switch. Acts on the press; held, it's momentary
     {
         if (e == E::Down) { toggle (ParamIDs::bypass); aDownToggled = true; say (flag (ParamIDs::bypass) ? "BYPASSED" : "ON"); }
@@ -420,7 +420,7 @@ void SeaSickProcessor::onFootEvent (int sw, FootswitchLogic::Event e)
     }
     else if (sw == 3)   // D: Re-roll, once the pair window has passed; hold for Pluck
     {
-        if (e == E::Down) rerollAt = now + FootswitchLogic::kComboWindow;
+        if (e == E::Down) rerollAt = clockNow + FootswitchLogic::kComboWindow;
         else if (e == E::HoldStart) { setPlain (ParamIDs::pluck, 1.0f); say ("PLUCK"); }
         else if (e == E::HoldEnd) setPlain (ParamIDs::pluck, 0.0f);
     }
@@ -429,12 +429,14 @@ void SeaSickProcessor::onFootEvent (int sw, FootswitchLogic::Event e)
 void SeaSickProcessor::footDown (int sw)
 {
     focusHere();
-    footswitches.press (sw, Time::getMillisecondCounterHiRes() * 0.001);
+    clockNow = Time::getMillisecondCounterHiRes() * 0.001;
+    footswitches.press (sw, clockNow);
 }
 
 void SeaSickProcessor::footUp (int sw)
 {
-    footswitches.release (sw, Time::getMillisecondCounterHiRes() * 0.001);
+    clockNow = Time::getMillisecondCounterHiRes() * 0.001;
+    footswitches.release (sw, clockNow);
 }
 
 void SeaSickProcessor::focusHere() { focused.store (this); }

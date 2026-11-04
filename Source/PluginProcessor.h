@@ -135,7 +135,8 @@ private:
 
     // what a footswitch's press did, so a combo can undo it
     bool aDownToggled = false, cDownToggled = false, cTurnedOn = false;
-    double rerollAt = -1.0;                   // D waits out the pair window before it re-rolls
+    double rerollAt = -1.0;
+    double clockNow = 0.0;                    // the footswitch clock: pump's time, or now for a panel press                   // D waits out the pair window before it re-rolls
 
     std::atomic<float> uiExp { 0.0f };
 

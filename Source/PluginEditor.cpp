@@ -800,7 +800,7 @@ SeaSickEditor::SeaSickEditor (SeaSickProcessor& p)
       damp (p, ParamIDs::damp, "Damp", "Sudden to slow"),
       depth (p, ParamIDs::depth, "Depth", "Less is more", true),
       lpg (p, ParamIDs::lpg, "LPG", "Pluck to bloom"),
-      floorDial (p, ParamIDs::floor, "Floor", "Inside: darkest"),
+      floorDial (p, ParamIDs::lpgFloor, "Floor", "Inside: darkest"),
       gateMeter (p),
       punch (p.apvts, ParamIDs::punch, "PUNCH OFF", "PUNCH", 12.0f),
       clean (p.apvts, ParamIDs::clean, "HISS", "CLEAN", 12.0f),
