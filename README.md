@@ -91,7 +91,16 @@ Every control, every footswitch job and Keeper are in one parameter list that a 
 
 ## CPU
 
-Per instance, one core, Bass mode with everything moving (the heaviest case). Every build writes fresh figures for Windows x64 and Linux ARM64 to `cpu-windows-x64.txt` and `cpu-linux-arm64.txt` on the builds branch.
+Per instance, one core, Bass mode with everything moving (the heaviest case):
+
+| Machine | 48 kHz, 64 samples | 48 kHz, 128 samples |
+| --- | --- | --- |
+| Windows x64, GitHub runner | 1.00% | 1.00% |
+| Linux ARM64, GitHub runner | 1.12% | 1.11% |
+
+Measured for v0.1 on 4 November 2026. A Raspberry Pi 5 core is slower than these runners, so expect a few times these figures there, still small.
+
+Every build writes fresh figures for Windows x64 and Linux ARM64 to `cpu-windows-x64.txt` and `cpu-linux-arm64.txt` on the builds branch.
 
 ## Building
 
