@@ -1,0 +1,27 @@
+00_kfield_not_an_lfo                   ok 
+01_default_chorus             48000 Hz  ok 
+02_rare_and_slow              48000 Hz  ok 
+03_nervous_and_sharp          48000 Hz  ok 
+04_warped_tape_vibrato        48000 Hz  ok 
+05_seasick_latch              48000 Hz  ok 
+06_swell_hold                 48000 Hz  ok 
+07_lpg_dark                   48000 Hz  ok 
+08_pluck                      48000 Hz  ok 
+09_bypass_is_clean            48000 Hz  ok 
+10_freeze_settle              48000 Hz  ok 
+11_freeze_hold_bend           48000 Hz  ok 
+12_reroll                     48000 Hz  ok 
+13_rate_damp_cancel           48000 Hz  ok 
+14_bass_ceiling               48000 Hz  ok 
+15_bass_fundamental_steady    48000 Hz  ok 
+16_bass_line                  48000 Hz  ok 
+17_line_input                 48000 Hz  ok 
+18_hiss_and_clean             48000 Hz  ok 
+19_volume_breakup             48000 Hz  ok 
+20_knob_sweeps                48000 Hz  ok 
+
+CPU per instance at 48 kHz (one core, Bass mode, everything moving):
+   64 samples: 1.12%
+  128 samples: 1.11%
+
+PASSED: 0 failed
