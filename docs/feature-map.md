@@ -2,7 +2,14 @@
 
 Written 4 November 2026. SeaSick recreates the behaviour of a random-modulation BBD pedal with an envelope low pass gate (the Fairfield Circuitry Shallow Water K-Field Modulator) in the Flip Fella family look. All DSP is original code written from public descriptions of the pedal. The plugin UI names no brands.
 
-Status: **draft for Kevin's review.** Nothing is built yet. Open questions are listed at the end.
+Status: **approved and built as v0.1** (Kevin, 4 November 2026). Decisions on the open questions:
+
+- Freeze has a panel toggle: **Settle** (the water stops and the pitch comes home) or **Hold bend** (keeps bending the way it was going, then drifts home).
+- Bass split below 110 Hz stays in tune but is still gated, and the wobble ceiling defaults to 30 cents.
+- Punch's 1 ms of latency is fine. It is always in the line, so toggling Punch never clicks.
+- Hold D is Pluck.
+- The dry signal is never gated.
+- The hiss is on by default, with a Clean switch.
 
 ## Versions
 
@@ -28,7 +35,7 @@ No source documents a circuit revision, a MkII, an expression or CV jack, or any
 | Footswitch | True bypass | Footswitch A |
 | Boost jumper (inside) | On by default for guitar. Off takes 6 dB off the input if it distorts | The Input pills: **Guitar** is Boost on. **Bass** is Boost off plus the bass protections below |
 | Pad jumper (inside) | For line level: 6 dB more cut and a lower input impedance | Input pill **Line** (synths, drum machines, a DAW send) |
-| LPG Adjust trimpot (inside) | The lowest frequency of the filter. Set with Mix full wet, LPG and Depth at minimum. Very sensitive. Users say it also changes how quickly the gate opens, and too fast gives a pop | **Floor** on the Deep page, 150 Hz to 1.5 kHz, default about 450 Hz. The pop is kept out by the follower's attack, so Floor only moves the tone |
+| LPG Adjust trimpot (inside) | The lowest frequency of the filter. Set with Mix full wet, LPG and Depth at minimum. Very sensitive. Users say it also changes how quickly the gate opens, and too fast gives a pop | **Floor** knob, 150 Hz to 1.5 kHz, default about 450 Hz. The pop is kept out by the follower's attack, so Floor only moves the tone |
 
 ## Hidden behaviours to keep
 
@@ -53,7 +60,7 @@ The panel shows the actual modulation signal scrolling past, so you can see it.
 
 Delay modulation bends every note by the same number of cents, but on low notes the same wobble sounds much more out of tune and beats against the fundamental. SeaSick's **Bass** input:
 
-- **Low split.** Below about 110 Hz (adjustable 60 to 200 Hz on the Deep page) the signal skips the delay, so the fundamental stays in tune and in time. It still goes through the gate's level envelope, so plucks still pluck. Above the split, everything wobbles.
+- **Low split.** Below about 110 Hz (adjustable 60 to 200 Hz) the signal skips the delay, so the fundamental stays in tune and in time. It still goes through the gate's level envelope, so plucks still pluck. Above the split, everything wobbles.
 - **Wobble ceiling.** Caps how far the pitch can bend in cents: about 30 cents in Bass mode, the full range on Guitar. Seasick extremes stay musical rather than atonal.
 - **Punch.** The gate reads the signal 1 ms ahead, so it's already open when the attack arrives and the pick transient is never filtered. That costs 1 ms of latency, which is reported to the host. It's on by default for Bass and optional for Guitar.
 - **No choke below the floor.** In Bass mode the gate never closes fully on the fundamental, so soft notes sound mellow rather than vanishing.
@@ -67,7 +74,7 @@ The pedal has one switch (bypass) and no MIDI, so there's no original MIDI map t
 | A | Bypass on or off (acts on the press) | Momentary: flips while held |
 | B | **Seasick** on or off: Depth goes deep, Damp eases and Rate rises, so it's the full warped-tape lurch | **Swell**: climbs into Seasick over about a second, falls back on release |
 | C | **Freeze** on or off: the water stops where it sits | Freeze while held |
-| D | **Re-roll**: a fresh lurch right now, from a new seed | **Pluck**: the gate shuts down hard, every note plucks short, until release |
+| D | **Re-roll**: a fresh lurch right now, from a new seed | **Pluck**: the gate opens only on note onsets and closes 40 ms later, so every note plucks short, until release |
 | A+B | **Calm**: clear Seasick, Freeze and Pluck, back to the knobs | |
 | C+D | Hand the footswitches to the next SeaSick | Held 1 second: **Keeper** |
 
@@ -88,7 +95,7 @@ Pebble sits in the right-hand section. It rocks and tilts with the actual modula
 ## Family conventions (following OilSlick)
 
 - `Source/PedalControl.*` and `Source/Keeper.*` copied from OilSlick and Prism Patch: Learn, calibration, curve, reading the footswitch straight from USB, combo holds, shared `Flip Fella Pedals.xml`, and Keeper (hold C+D for a second keeps the last 8 seconds).
-- Pages: Main and Pedal, plus a Deep drawer for the inside-the-pedal settings (Floor, Split, Ceiling, Punch, Clean). Every footswitch job has an on-screen button.
+- Pages: Main and Pedal. The inside-the-pedal settings (Floor, Split, Ceiling, Punch, Clean, Freeze mode) sit on the Main page beside the knobs they affect. Every footswitch job has an on-screen button.
 - The engine is plain C++17 with no JUCE (portable to the Pi rig), with an offline render test and a footswitch test.
 - Builds: the Windows VST3 and Linux ARM64 through GitHub Actions, published to the `builds` branch, with CPU figures at 48 kHz for 64 and 128 sample buffers.
 
